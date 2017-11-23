@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Resource Type: windows_msp
+  
+    &mdash; Documentation by YARD 0.9.9
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "puppet_types::windows_msp";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../puppet_type_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (w)</a> &raquo;
+    <span class='title'><span class='object_link'>Resource Types</span></span>
+     &raquo; 
+    <span class="title">windows_msp</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="puppet_type_list_link"
+        href="../puppet_type_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Resource Type: windows_msp</h1>
+<div class="box_info">
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>
+      lib/puppet/type/windows_msp.rb
+    </dd>
+  </dl>
+  
+  <dl>
+    <dt>Providers:</dt>
+    <dd>
+      
+        <span class='object_link'><a href="../puppet_providers_windows_msp/ruby.html" title="puppet_providers_windows_msp::ruby (puppet_provider)">ruby</a></span><br/>
+      
+    </dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2>
+<div class="docstring">
+  <div class="discussion">
+    <p>Install MSP patches using Puppet.  Since we don&#39;t know whats inside the MSP
+file, user must pass a list of files to check for the requisite version which
+we will use to test whether the patch has been applied or not.  It may be
+possible to extract this info from the MSP file itself in the future, there&#39;s
+a cool blog post detailing this process at <a href="https://blogs.msdn.microsoft.com/heaths/2006/02/14/extract-files-from-patches/">https://blogs.msdn.microsoft.com/heaths/2006/02/14/extract-files-from-patches/</a>
+PR? ;-)</p>
+
+<p>A note on backslashes: Since windows uses the backslash as a path delimiter
+and puppet uses it as an escape character, please pass all paths used with
+this module delimited using the forward slash <code>/</code> and the code will Do The
+Right Thing (TM), eg <code>C:/temp/patches/upgrademe.msp</code></p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Testing for patching overriding file version as required</p>
+</div></p>
+      
+      <pre class="example code"><code>windows_msp { &#39;c:/windows/temp/KB4016126-AMD64-Server.msp&quot;:
+  version =&gt; &#39;7.1.10226.1090&#39;,
+  files =&gt; {
+    &quot;C:/Program Files/Microsoft System Center 2016/Operations Manager/Server/csdal.dll&quot; =&gt; undef,
+    &quot;C:/Program Files/Microsoft System Center 2016/Operations Manager/Server/Microsoft.EnterpriseManagement.DataAccessService.OperationsManager.dll&quot; =&gt; undef,
+    &quot;C:/Program Files/Microsoft System Center 2016/Operations Manager/Server/Microsoft.EnterpriseManagement.DataWarehouse.DataAccess.dll&quot; =&gt; undef,,
+    &quot;C:/Program Files/Microsoft System Center 2016/Operations Manager/Server/Microsoft.EnterpriseManagement.HealthService.Modules.DataWarehouse.dll&quot; =&gt; undef,
+    &quot;C:/Program Files/Microsoft System Center 2016/Operations Manager/Server/Microsoft.EnterpriseManagement.RuntimeService.dll&quot; =&gt; &#39;7.2.2226.1090&#39;,
+    &quot;C:/Program Files/Microsoft System Center 2016/Operations Manager/Server/Microsoft.EnterpriseManagement.Utility.WorkflowExpansion.dll&quot; =&gt; undef,
+    &quot;C:/Program Files/Microsoft System Center 2016/Operations Manager/Server/Microsoft.Mom.Modules.ClientMonitoring.dll&quot; =&gt; undef,
+    &quot;C:/Program Files/Microsoft System Center 2016/Operations Manager/Server/NetworkDiscoveryModules.dll&quot; =&gt; undef,
+  },
+}</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Testing for patching using a list of files that are all the same version</p>
+</div></p>
+      
+      <pre class="example code"><code>windows_msp { &#39;c:/windows/temp/KB4016126-AMD64-Server.msp&quot;:
+  version =&gt; &#39;7.1.10226.1090&#39;,
+  files =&gt; [
+    &quot;C:/Program Files/Microsoft System Center 2016/Operations Manager/Server/csdal.dll&quot;,
+    &quot;C:/Program Files/Microsoft System Center 2016/Operations Manager/Server/Microsoft.EnterpriseManagement.DataAccessService.OperationsManager.dll&quot;,
+    &quot;C:/Program Files/Microsoft System Center 2016/Operations Manager/Server/Microsoft.EnterpriseManagement.DataWarehouse.DataAccess.dll&quot;,
+    &quot;C:/Program Files/Microsoft System Center 2016/Operations Manager/Server/Microsoft.EnterpriseManagement.HealthService.Modules.DataWarehouse.dll&quot;,
+    &quot;C:/Program Files/Microsoft System Center 2016/Operations Manager/Server/Microsoft.EnterpriseManagement.RuntimeService.dll&quot;,
+    &quot;C:/Program Files/Microsoft System Center 2016/Operations Manager/Server/Microsoft.EnterpriseManagement.Utility.WorkflowExpansion.dll&quot;,
+    &quot;C:/Program Files/Microsoft System Center 2016/Operations Manager/Server/Microsoft.Mom.Modules.ClientMonitoring.dll&quot;,
+    &quot;C:/Program Files/Microsoft System Center 2016/Operations Manager/Server/NetworkDiscoveryModules.dll&quot;,
+  ],
+}</code></pre>
+    
+  </div>
+
+
+</div>
+<div class="tags">
+  <p class="tag_title">Properties</p>
+  <ul>
+    
+    <li>
+      <span class="name">ensure</span>
+      
+      <span class="default"> (defaults to: <em>present</em>)</span>
+      
+      
+      <div class="docstring">
+        <div class="discussion">
+          <p>Ensure the patch is applied. Removal/rollback not supported</p>
+
+        </div>
+      </div>
+      
+      
+      <div>
+        Supported values:
+        <ul>
+          
+          <li>
+            
+            present
+          </li>
+          
+          <li>
+            
+            absent
+          </li>
+          
+        </ul>
+      </div>
+      
+    </li>
+    
+  </ul>
+</div>
+
+
+<div class="tags">
+  <p class="tag_title">Parameters</p>
+  <ul>
+    
+    <li>
+      <span class="name">files</span>
+      
+      
+      <div class="docstring">
+        <div class="discussion">
+          <p>Array of files or Hash of files+versions matching the state of the system after the patch has been applied</p>
+
+        </div>
+      </div>
+      
+      
+    </li>
+    
+    <li>
+      <span class="name">name (namevar)</span>
+      
+      
+      <div class="docstring">
+        <div class="discussion">
+          <p>Path to the MSP file to install</p>
+
+        </div>
+      </div>
+      
+      
+    </li>
+    
+    <li>
+      <span class="name">version</span>
+      
+      
+      <div class="docstring">
+        <div class="discussion">
+          <p>Version string to test the files listed in <code>files</code> for after the patch has been applied</p>
+
+        </div>
+      </div>
+      
+      
+    </li>
+    
+  </ul>
+</div>
+
+
+</div>
+
+      <div id="footer">
+  Generated on Thu Nov 23 17:43:09 2017 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.9 (ruby-2.3.3).
+</div>
+
+    </div>
+  </body>
+</html>
