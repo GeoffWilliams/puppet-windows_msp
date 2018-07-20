@@ -44,3 +44,5 @@ make
 ```
 
 See `.travis.yml` for a working CI example
+
+Due to lack of support for windows acceptance testing, only basic linting and syntax checking is performed
